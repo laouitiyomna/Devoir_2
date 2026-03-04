@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Modifier un Événement</title>
+    <link rel="stylesheet" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
+</head>
+<body>
+
+<div th:replace="~{template}"></div>
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">Modifier un Événement</div>
+        <div class="card-body">
+
+            <form method="post" th:action="@{updateEvenement}">
+                <input type="hidden" name="idEvenement" th:value="${evenement.idEvenement}"/>
+
+                <div class="form-group">
+                    <label>Nom Événement</label>
+                    <input type="text" class="form-control"
+                           name="nomEvenement" th:value="${evenement.nomEvenement}" required/>
+                </div>
+
+                <div class="form-group">
+                    <label>Lieu</label>
+                    <input type="text" class="form-control"
+                           name="lieu" th:value="${evenement.lieu}" required/>
+                </div>
+
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" class="form-control"
+                           name="date"
+                           th:value="${#dates.format(evenement.dateEvenement, 'yyyy-MM-dd')}" required/>
+                </div>
+
+                <div class="form-group">
+                    <label>Organisateur</label>
+                    <input type="text" class="form-control"
+                           name="organisateur" th:value="${evenement.organisateur}" required/>
+                </div>
+
+                <div class="form-group">
+                    <label>Genre</label>
+                    <select class="form-control" name="idGenre">
+                        <option value="">-- Sélectionner un genre --</option>
+                        <option th:each="g : ${genres}"
+                                th:value="${g.idGenre}"
+                                th:text="${g.nomGenre}"
+                                th:selected="${evenement.genre != null and evenement.genre.idGenre == g.idGenre}">
+                        </option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-warning">Modifier</button>
+                <a th:href="@{ListeEvenements}" class="btn btn-secondary ml-2">Annuler</a>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
